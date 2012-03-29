@@ -76,4 +76,59 @@ describe SalesEngine::Merchant do
     end
   end
 
+  describe ".most_items" do
+    it "returns the top n item-sellers" do
+      most = SalesEngine::Merchant.most_items(5)
+      most.first.name.should == "Kassulke, O'Hara and Quitzon"
+      most.last.name.should  == "Daugherty Group"
+    end
+  end
+
+  describe "#revenue" do
+    context "without a date" do
+      let(:merchant) { SalesEngine::Merchant.find_by_name "Dicki-Bednar" }
+
+      it "reports all revenue" do
+        merchant.revenue.should == BigDecimal.new("1148393.74")
+      end
+    end
+    context "given a date" do
+      let(:merchant) { SalesEngine::Merchant.find_by_name "Willms and Sons" }
+
+      it "restricts to that date" do
+        date = Date.parse "Fri, 09 Mar 2012"
+
+        merchant.revenue(date).should == BigDecimal.new("8373.29")
+      end
+    end
+  end
+
+  describe "#favorite_customer" do
+    let(:merchant) { SalesEngine::Merchant.find_by_name "Terry-Moore" }
+    let(:customer_names) do
+      [["Jayme", "Hammes"], ["Elmer", "Konopelski"], ["Eleanora", "Kling"],
+       ["Friedrich", "Rowe"], ["Orion", "Hills"], ["Lambert", "Abernathy"]]
+    end
+
+    it "returns the customer with the most transactions" do
+      customer = merchant.favorite_customer
+      customer_names.any? do |first_name, last_name|
+        customer.first_name == first_name
+        customer.last_name  == last_name
+      end.should be_true
+    end
+  end
+
+  describe "#customers_with_pending_invoices" do
+    let(:merchant) { SalesEngine::Merchant.find_by_name "Parisian Group" }
+
+    it "returns the total number of customers with pending invoices" do
+      customers = merchant.customers_with_pending_invoices
+      customers.count.should == 4
+      customers.any? do |customer|
+        customer.last_name == "Ledner"
+      end.should be_true
+    end
+  end
+
 end
