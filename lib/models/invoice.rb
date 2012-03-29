@@ -25,6 +25,10 @@ module SalesEngine
       @attributes[:status]
     end
 
+    def quantity
+      transactions.select { |t| t.successful_transaction? }.count
+    end
+
     def revenue
       @revenue ||= InvoiceItem.find_all_by_invoice_id(id).collect do |it|
         it.revenue

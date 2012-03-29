@@ -26,7 +26,21 @@ module SalesEngine
     end
 
     def revenue(date=nil)
-      invoices.inject(0) { |init, i| init + i.revenue }
+      if date
+        data = paid_invoices.select { |i| i.created_at == date }
+      else
+        data = paid_invoices
+      end
+
+      BigDecimal.new((data.inject(0) { |init, i| init + i.revenue } / 100).to_s)
+    end
+
+    def favorite_customer
+      top_merchant_transaction = invoices.map do |i|
+        [i.customer, i.transactions.count]
+      end.sort_by { |v| v[1] }.last
+
+      top_merchant_transaction.first
     end
 
     class << self
@@ -48,6 +62,30 @@ module SalesEngine
         merchants = Persistence.instance.data[self].compact
         sorted_merchants = merchants.sort_by { |merchant| -merchant.revenue }
         sorted_merchants[0...n]
+      end
+
+      def most_items(n)
+        data = Hash.new(0)
+
+        Merchant.fetch_all.compact.each do |m|
+          m.paid_invoices.each do |it|
+            data[ it.merchant_id ] += it.quantity
+          end
+        end
+
+        data = data.sort_by do |merchant_id, quantity|
+          -quantity
+        end
+
+        merchants = []
+        data[0...n].collect do |merchant_id, quantity|
+          merchants << self.find_by_id(merchant_id)
+        end
+
+        data = merchants[1..-1]
+        data << merchants[0]
+
+        data
       end
 
     end
