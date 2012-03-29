@@ -46,9 +46,14 @@ describe SalesEngine::InvoiceItem do
       end
     end
 
-  end
+    describe "#transactions" do
+      it "exists" do
+        invoice_item.respond_to? :transactions
+      end
 
-  context "Business Intelligence" do
-
+      it "returns an array" do
+        invoice_item.transactions.should be_an Array
+      end
+    end
   end
 end

@@ -8,10 +8,6 @@ module SalesEngine
       Model.persistance.persist(self)
     end
 
-    def self.included includer
-        includer.extend ClassMethods
-    end
-
     def id
       @id ||= @attributes[:id].to_i
     end

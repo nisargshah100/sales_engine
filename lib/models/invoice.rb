@@ -26,12 +26,6 @@ module SalesEngine
     end
 
     def revenue
-      @revenue ||= InvoiceItem.find_all_by_invoice_id(id).collect do |it|
-        it.revenue
-      end.inject(:+)
-    end
-
-    def revenue
       if @revenue.nil?
         @revenue = 0
 
