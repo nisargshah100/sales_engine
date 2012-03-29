@@ -21,7 +21,7 @@ module SalesEngine
     "transactions.csv" => SalesEngine::Transaction
   }
 
-  def self.start
+  def self.startup
     Dir.glob('./data/*.csv').each do |f|
       filename = File.basename(f)
       klass = FILENAME_TO_CLASS[filename]
