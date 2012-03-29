@@ -1,14 +1,17 @@
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__))) unless
+  $LOAD_PATH.include?(File.expand_path(File.dirname(__FILE__)))
+  
 require 'csv'
 require 'bigdecimal'
 
-require './sales_engine/lib/db/persistence'
-require './sales_engine/lib/models/model'
-require './sales_engine/lib/models/merchant'
-require './sales_engine/lib/models/customer'
-require './sales_engine/lib/models/item'
-require './sales_engine/lib/models/invoice'
-require './sales_engine/lib/models/invoice_item'
-require './sales_engine/lib/models/transaction'
+require 'db/persistence'
+require 'models/model'
+require 'models/merchant'
+require 'models/customer'
+require 'models/item'
+require 'models/invoice'
+require 'models/invoice_item'
+require 'models/transaction'
 
 module SalesEngine
 
