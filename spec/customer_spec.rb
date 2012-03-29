@@ -58,7 +58,7 @@ describe SalesEngine::Customer do
     end
 
     describe "#favorite_merchant" do
-      it "returns the merchant where the customer has had the most transactions" do
+      it "returns the merchant where the customer has most transactions" do
         customer.favorite_merchant.name.should == "Shields, Hirthe and Smith"
       end
     end

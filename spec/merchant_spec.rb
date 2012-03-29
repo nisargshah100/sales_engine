@@ -32,7 +32,9 @@ describe SalesEngine::Merchant do
   end
 
   context "Relationships" do
-    let(:merchant) { SalesEngine::Merchant.find_by_name "Kirlin, Jakubowski and Smitham" }
+    let(:merchant) {
+      SalesEngine::Merchant.find_by_name "Kirlin, Jakubowski and Smitham"
+    }
 
     describe "#items" do
       it "has 33 of them" do

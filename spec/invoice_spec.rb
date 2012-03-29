@@ -64,7 +64,10 @@ describe SalesEngine::Invoice do
       end
 
       it "has one for an item 'Item Accusamus Officia'" do
-        item = invoice.invoice_items.find {|ii| ii.item.name == 'Item Accusamus Officia' }
+        item = invoice.invoice_items.find do |ii|
+          ii.item.name == 'Item Accusamus Officia'
+        end
+
         item.should_not be_nil
       end
     end
@@ -80,7 +83,11 @@ describe SalesEngine::Invoice do
       end
       it "creates a new invoice" do
 
-        invoice = SalesEngine::Invoice.create(customer: customer, merchant: merchant, items: items)
+        invoice = SalesEngine::Invoice.create(
+          customer: customer,
+          merchant: merchant,
+          items: items
+        )
 
         items.map(&:name).each do |name|
           invoice.items.map(&:name).should include(name)
@@ -96,7 +103,11 @@ describe SalesEngine::Invoice do
         invoice = SalesEngine::Invoice.find_by_id(100)
         prior_transaction_count = invoice.transactions.count
 
-        invoice.charge(credit_card_number: '1111222233334444',  credit_card_expiration_date: "10/14", result: "success")
+        invoice.charge(
+          credit_card_number: '1111222233334444',
+          credit_card_expiration_date: "10/14",
+          result: "success"
+        )
 
         invoice = SalesEngine::Invoice.find_by_id(invoice.id)
         invoice.transactions.count.should == prior_transaction_count + 1

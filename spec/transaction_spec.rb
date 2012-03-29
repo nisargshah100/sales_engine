@@ -19,7 +19,8 @@ describe SalesEngine::Transaction do
 
     describe ".find_by_credit_card_number" do
       it "can find a record" do
-        transaction = SalesEngine::Transaction.find_by_credit_card_number "4634664005836219"
+        num = "4634664005836219"
+        transaction = SalesEngine::Transaction.find_by_credit_card_number num
         transaction.id.should == 5536
       end
     end
@@ -38,7 +39,8 @@ describe SalesEngine::Transaction do
     describe "#invoice" do
       it "exists" do
         invoice_customer = SalesEngine::Customer.find_by_id 192
-        transaction.invoice.customer.first_name.should == invoice_customer.first_name
+        tran_cust_name = transaction.invoice.customer.first_name
+        tran_cust_name.should == invoice_customer.first_name
       end
     end
 
