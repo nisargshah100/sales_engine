@@ -36,7 +36,8 @@ module SalesEngine
   class Parser
     def self.fetch_data(filename)
       rows = []
-      CSV.foreach(filename, { :headers => true, :header_converters => :symbol }) do |row|
+      options = { :headers => true, :header_converters => :symbol }
+      CSV.foreach(filename, options) do |row|
         rows << Hash[row]
       end
 

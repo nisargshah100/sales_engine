@@ -1,6 +1,6 @@
 module SalesEngine
   class Customer < Model
-    
+
     def initialize(attributes)
       super(attributes)
     end
@@ -8,7 +8,7 @@ module SalesEngine
     def last_name
       @attributes[:last_name]
     end
-    
+
     def first_name
       @attributes[:first_name]
     end
@@ -22,7 +22,7 @@ module SalesEngine
     end
 
     def favorite_merchant
-      top_merchant_transaction = invoices.map do |i| 
+      top_merchant_transaction = invoices.map do |i|
         [i.merchant, i.transactions.count]
       end.sort_by { |v| v[1] }.last
 

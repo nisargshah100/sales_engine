@@ -1,10 +1,10 @@
 module SalesEngine
   class Item < Model
-    
+
     def initialize(attributes)
       super(attributes)
     end
-  
+
     def merchant_id
       @merchant_id ||= @attributes[:merchant_id].to_i
     end
@@ -16,7 +16,8 @@ module SalesEngine
     def unit_price
       if @unit_price.nil?
         unit_price = @attributes[:unit_price].to_s
-        @unit_price ||= BigDecimal.new "#{unit_price[0..-3]}.#{unit_price[-2..-1]}"
+        new_unit_price = "#{unit_price[0..-3]}.#{unit_price[-2..-1]}"
+        @unit_price ||= BigDecimal.new new_unit_price
       end
       @unit_price
     end

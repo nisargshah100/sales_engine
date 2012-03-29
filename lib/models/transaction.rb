@@ -1,6 +1,6 @@
 module SalesEngine
   class Transaction < Model
-    
+
     def initialize(attributes)
       super(attributes)
     end
@@ -12,7 +12,7 @@ module SalesEngine
     def invoice_id
       @invoice_id ||= @attributes[:invoice_id].to_i
     end
-  
+
     def credit_card_number
       @credit_card_number ||= @attributes[:credit_card_number]
     end

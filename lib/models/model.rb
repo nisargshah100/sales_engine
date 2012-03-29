@@ -2,7 +2,7 @@ require 'date'
 
 module SalesEngine
   class Model
-    
+
     def initialize(attributes)
       @attributes = attributes
       Model.persistance.persist(self)
@@ -62,7 +62,9 @@ module SalesEngine
       end
 
       def find_all_by(sym, args)
-        persistance.data[self].find_all { |x| x.send(sym.to_sym) == args[0] if x }
+        persistance.data[self].find_all do |x|
+          x.send(sym.to_sym) == args[0] if x
+        end
       end
 
       def unique_id

@@ -1,6 +1,6 @@
 module SalesEngine
   class Invoice < Model
-    
+
     def initialize(attributes)
       super(attributes)
     end

@@ -1,6 +1,6 @@
 module SalesEngine
   class Merchant < Model
-    
+
     def initialize(attributes)
       super(attributes)
     end
@@ -12,7 +12,7 @@ module SalesEngine
     def items
       @items ||= Item.find_all_by_merchant_id(id)
     end
-  
+
     def invoices
       @invoices ||= Invoice.find_all_by_merchant_id(id)
     end
@@ -30,10 +30,10 @@ module SalesEngine
     end
 
     class << self
-      
+
       def revenue(date)
         invoices = Invoice.find_all_by_updated_at(date)
-        invoices_sum = invoices.collect do |i| 
+        invoices_sum = invoices.collect do |i|
           if i.successful_invoice?
             i.revenue
           else
