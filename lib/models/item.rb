@@ -1,0 +1,73 @@
+module SalesEngine
+  class Item < Model
+    
+    def initialize(attributes)
+      super(attributes)
+    end
+  
+    def merchant_id
+      @merchant_id ||= @attributes[:merchant_id].to_i
+    end
+
+    def name
+      @name ||= @attributes[:name]
+    end
+
+    def unit_price
+      if @unit_price.nil?
+        unit_price = @attributes[:unit_price].to_s
+        @unit_price ||= BigDecimal.new "#{unit_price[0..-3]}.#{unit_price[-2..-1]}"
+      end
+      @unit_price
+    end
+
+    def invoice_items
+      @invoice_items ||= InvoiceItem.find_all_by_item_id(id)
+    end
+
+    def merchant
+      @merchant ||= Merchant.find_by_id(merchant_id)
+    end
+
+    def revenue
+      @revenue ||= self.invoice_items.inject(0) do |sum, it|
+         sum += it.unit_price * it.quantity
+       end
+    end
+
+    def total_items_sold
+      sum = 0
+      @items_sold ||= invoice_items.each do |it|
+        if it.invoice.successful_invoice?
+          sum += it.quantity
+        end
+      end
+      @total_items_sold ||= sum
+    end
+
+    def best_day
+      if @best_day.nil?
+        days = Hash.new(0)
+        invoice_items.each do |it|
+          days[it.invoice.created_at] += it.quantity
+        end
+        @best_day ||= days.sort_by { |date,quantity| -quantity }.first.first
+      end
+      @best_day
+    end
+
+    class << self
+      def most_revenue(n)
+        items = Persistence.instance.data[self].compact
+        sorted_items = items.sort_by { |item| -item.revenue }
+        sorted_items[0...n]
+      end
+
+      def most_items(n)
+        items = Persistence.instance.data[self].compact
+        sorted_items = items.sort_by { |item| -item.total_items_sold }
+        sorted_items[0...n]
+      end
+    end
+  end
+end
