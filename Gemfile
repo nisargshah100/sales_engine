@@ -8,10 +8,6 @@ group :test do
 end
 
 group :development do
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'ruby_gntp'
-  gem 'ruby-debug19'
   gem 'cane'
   gem 'reek'
 end
