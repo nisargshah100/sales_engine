@@ -66,6 +66,14 @@ describe SalesEngine::Merchant do
         revenue.should == BigDecimal.new("2549722.91")
       end
     end
+
+    describe ".most_revenue" do
+      it "returns the top n revenue-earners" do
+        most = SalesEngine::Merchant.most_revenue(3)
+        most.first.name.should == "Dicki-Bednar"
+        most.last.name.should  == "Okuneva, Prohaska and Rolfson"
+      end
+    end
   end
 
 end

@@ -38,7 +38,7 @@ module SalesEngine
       end
 
       def random
-        fetch_all.sample
+        fetch_all.compact.sample
       end
 
       def fetch_all

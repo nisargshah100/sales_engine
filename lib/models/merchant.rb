@@ -25,6 +25,10 @@ module SalesEngine
       (invoices - paid_invoices).collect { |i| i.customer }
     end
 
+    def revenue(date=nil)
+      invoices.inject(0) { |init, i| init + i.revenue }
+    end
+
     class << self
       
       def revenue(date)
@@ -38,6 +42,12 @@ module SalesEngine
         end.inject(:+)
 
         BigDecimal.new((invoices_sum/100).to_s)
+      end
+
+      def most_revenue(n)
+        merchants = Persistence.instance.data[self].compact
+        sorted_merchants = merchants.sort_by { |merchant| -merchant.revenue }
+        sorted_merchants[0...n]
       end
 
     end
