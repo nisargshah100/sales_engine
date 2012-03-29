@@ -1,14 +1,14 @@
 require 'csv'
 require 'bigdecimal'
 
-require '../sales_engine/lib/db/persistence'
-require '../sales_engine/lib/models/model'
-require '../sales_engine/lib/models/merchant'
-require '../sales_engine/lib/models/customer'
-require '../sales_engine/lib/models/item'
-require '../sales_engine/lib/models/invoice'
-require '../sales_engine/lib/models/invoice_item'
-require '../sales_engine/lib/models/transaction'
+require './sales_engine/lib/db/persistence'
+require './sales_engine/lib/models/model'
+require './sales_engine/lib/models/merchant'
+require './sales_engine/lib/models/customer'
+require './sales_engine/lib/models/item'
+require './sales_engine/lib/models/invoice'
+require './sales_engine/lib/models/invoice_item'
+require './sales_engine/lib/models/transaction'
 
 module SalesEngine
 
