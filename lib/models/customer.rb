@@ -22,12 +22,15 @@ module SalesEngine
     end
 
     def favorite_merchant
-      top_merchant_transaction = invoices.map do |inv|
-        [inv.merchant, inv.transactions.count]
-      end.sort_by { |value| value[1] }.last
-
-      top_merchant_transaction.first
+      total_invoices_by_merchant.sort_by { |k, v| v }.first.key
     end
-
+    
+    def total_invoices_by_merchant
+      result = {}
+      invoices.each do |inv|
+        result[inv.merchant] += 1
+      end
+      result
+    end
   end
 end
