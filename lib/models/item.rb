@@ -58,15 +58,17 @@ module SalesEngine
     end
 
     class << self
-      def most_revenue(n)
-        items = Persistence.instance.data[self].compact
-        sorted_items = items.sort_by { |item| -item.revenue }
-        sorted_items[0...n]
+      def with_greatest_revenue(n)
+        most_something(:revenue, n)
       end
 
-      def most_items(n)
+      def with_greatest_number_sold(n)
+        most_something(:total_items_sold, n)
+      end
+
+      def most_something(thing, n)
         items = Persistence.instance.data[self].compact
-        sorted_items = items.sort_by { |item| -item.total_items_sold }
+        sorted_items = items.sort_by { |item| -item.send(thing) }
         sorted_items[0...n]
       end
     end
